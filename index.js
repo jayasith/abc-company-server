@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const cookieParser = require('cookie-parser');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -15,7 +14,6 @@ app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
 app.use('/api/public/uploads', express.static(path.join(__dirname, '/api/public/uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 const sslServer = https.createServer(
   {
@@ -40,6 +38,9 @@ sslServer.listen(PORT, () => console.log(`secure server on port ${PORT}`))
 //   .catch((err) => {
 //     console.error(err.message);
 //   });
+
+app.use('/user', require('./routes/user.route'));
+app.use('/admin', require('./routes/admin.route'));
 
 app.get('/', (req, res) => {
   res.send('<h3>ABC COMPANY API</h3>');
