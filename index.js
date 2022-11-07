@@ -4,6 +4,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,19 +17,29 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-mongoose
-  .connect(process.env.CONNECTION_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`connected to mongodb and started listening on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error(err.message);
-  });
+const sslServer = https.createServer(
+  {
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
+  },
+  app
+)
+
+sslServer.listen(PORT, () => console.log(`secure server on port ${PORT}`))
+
+// mongoose
+//   .connect(process.env.CONNECTION_URL, {
+//     useUnifiedTopology: true,
+//     useNewUrlParser: true,
+//   })
+//   .then(() => {
+//     app.listen(PORT, () => {
+//       console.log(`connected to mongodb and started listening on port ${PORT}`);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error(err.message);
+//   });
 
 app.get('/', (req, res) => {
   res.send('<h3>ABC COMPANY API</h3>');
