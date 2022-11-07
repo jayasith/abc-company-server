@@ -27,6 +27,9 @@ mongoose
     console.error(err.message);
   });
 
+app.use('/user', require('./routes/user.route'));
+app.use('/admin', require('./routes/admin.route'));
+
 app.get('/', (req, res) => {
   res.send('<h3>ABC COMPANY API</h3>');
 });
