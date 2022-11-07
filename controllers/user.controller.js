@@ -68,7 +68,7 @@ const saveUser = async (req, res) => {
  */
 const getUsers = async (req, res) => {
   try {
-    const Users = await User.find();
+    const Users = await User.find({}, { password: 0 });
     return res.status(200).json({ Users: Users });
   } catch (err) {
     console.error(err.message);
