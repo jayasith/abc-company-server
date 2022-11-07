@@ -6,9 +6,7 @@ const Message = require("../models/message.model");
  * @returns {Object} res
  */
 const saveMessage=async(req,res)=>{
-    console.log("hello")
     if(req.body){
-        console.log(req.body+"hello");
     const{message,userId} = req.body;
 
     if(!message){
@@ -35,7 +33,6 @@ const saveMessage=async(req,res)=>{
  * @returns {Object} res
  */
 const getMessgeById = async (req, res) => {
-  console.log("get Massage")
   if (req.params.id) {
     try {
       const message = await Message.findById(req.params.id);
@@ -53,9 +50,7 @@ const getMessgeById = async (req, res) => {
  * @returns {Object} res
  */
 const getMessgeByUserId = async (req, res) => {
-  console.log("get Massage for user ID");
   if (req.params.id) {
-    console.log(req.params.id)
     try {
       const message = await Message.find({userId :req.params.id});
       return res.status(200).json({ message: message });
@@ -88,7 +83,6 @@ const getAllMessages = async (req, res) => {
  * @returns {Object} res
  */
 const deleteMessage = async (req, res) => {
-    console.log("hellodelete")
   if (req.params.id) {
     try {
       await Message.findByIdAndDelete(req.params.id);
@@ -99,6 +93,7 @@ const deleteMessage = async (req, res) => {
     }
   }
 };
+
 module.exports = {
   saveMessage,
   getAllMessages,
