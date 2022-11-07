@@ -21,23 +21,19 @@ const sslServer = https.createServer(
     cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
   },
   app
-)
+);
 
-sslServer.listen(PORT, () => console.log(`secure server on port ${PORT}`))
-
-// mongoose
-//   .connect(process.env.CONNECTION_URL, {
-//     useUnifiedTopology: true,
-//     useNewUrlParser: true,
-//   })
-//   .then(() => {
-//     app.listen(PORT, () => {
-//       console.log(`connected to mongodb and started listening on port ${PORT}`);
-//     });
-//   })
-//   .catch((err) => {
-//     console.error(err.message);
-//   });
+mongoose
+  .connect(process.env.CONNECTION_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    sslServer.listen(PORT, () => console.log(`Secure server listening on port ${PORT}`));
+  })
+  .catch((err) => {
+    console.error(err.message);
+  });
 
 app.use('/user', require('./routes/user.route'));
 app.use('/admin', require('./routes/admin.route'));
