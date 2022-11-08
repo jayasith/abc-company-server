@@ -38,7 +38,7 @@ mongoose
 app.use('/message', require('./routes/message.route'));
 app.use("/user", require("./routes/user.route"));
 app.use('/admin', require('./routes/admin.route'));
-app.use('/user', require('./routes/file.route'));
+app.use('/file', require('./routes/file.route'));
 
 app.get('/', (req, res) => {
   res.send('<h3>ABC COMPANY API</h3>');
