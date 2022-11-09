@@ -7,7 +7,7 @@ const Message = require("../models/message.model");
  */
 const saveMessage=async(req,res)=>{
     if(req.body){
-    const{message,userId} = req.body;
+    const{message,user} = req.body;
 
     if(!message){
         return res.status(400).json({ message: "Please fill all the fields" });
@@ -15,7 +15,7 @@ const saveMessage=async(req,res)=>{
     try{
         const newMessage = new Message({
             message,
-            userId:userId,
+            userId:user,
         });
         await newMessage.save();
         return res.status(201).send("Message successfully sent");
@@ -50,9 +50,9 @@ const getMessgeById = async (req, res) => {
  * @returns {Object} res
  */
 const getMessgeByUserId = async (req, res) => {
-  if (req.params.id) {
+  if (req.body.user) {
     try {
-      const message = await Message.find({userId :req.params.id});
+      const message = await Message.find({userId :req.body.user});
       return res.status(200).json({ message: message });
     } catch (err) {
       console.error(err.message);
