@@ -16,7 +16,7 @@ router.get("/worker/:id", verifyWorkerAuth, getMessgeByUserId);
 router.get("/manager/:id", verifyManagerAuth, getMessgeByUserId);
 router.get("/woker/get/:id", verifyWorkerAuth, getMessgeById);
 router.get("/manager/get/:id", verifyManagerAuth, getMessgeById);
-router.post("/woker", verifyWorkerAuth, saveMessage);
+router.post("/worker", verifyWorkerAuth, saveMessage);
 router.post("/manager", verifyManagerAuth, saveMessage);
 router.delete(
   "/:id",
