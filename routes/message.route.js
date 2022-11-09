@@ -6,18 +6,20 @@ const {
   getMessgeByUserId,
   deleteMessage,
 } = require("../controllers/message.controller");   
+
 const { verifyAdminAuth } = require("../middleware/auth.admin.middleware")
 const { verifyManagerAuth } = require("../middleware/auth.manager.middleware");
 const { verifyWorkerAuth } = require("../middleware/auth.worker.middleware")
-router.get("/getAllMessages", verifyAdminAuth, getAllMessages);
-router.get("/getMessgesByWorkerId/:id", verifyWorkerAuth, getMessgeByUserId);
-router.get("/getMessgesByManagerId/:id", verifyManagerAuth, getMessgeByUserId);
-router.get("/getWorkerMessages/:id", verifyWorkerAuth, getMessgeById);
-router.get("/getManagerMessages/:id", verifyManagerAuth, getMessgeById);
-router.post("/worker/save", verifyWorkerAuth, saveMessage);
-router.post("/manager/save", verifyManagerAuth, saveMessage);
+
+router.get("/", verifyAdminAuth, getAllMessages);
+router.get("/worker/:id", verifyWorkerAuth, getMessgeByUserId);
+router.get("/manager/:id", verifyManagerAuth, getMessgeByUserId);
+router.get("/woker/get/:id", verifyWorkerAuth, getMessgeById);
+router.get("/manager/get/:id", verifyManagerAuth, getMessgeById);
+router.post("/worker", verifyWorkerAuth, saveMessage);
+router.post("/manager", verifyManagerAuth, saveMessage);
 router.delete(
-  "/delete/:id",
+  "/:id",
   deleteMessage
 );
 
