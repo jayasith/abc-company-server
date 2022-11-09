@@ -12,11 +12,14 @@ const verifyWorkerAuth = (req, res, next) => {
   if (req.headers.token) {
     try {
       const token = req.headers.token;
+      console.log(token);
       if (!token) return res.status(401).json({ message: 'Unauthorized' });
 
       const verified = jwt.verify(token, process.env.JWT_SECRET);
 
       if (!verified.role === roles.WORKER) return res.status(401).json({ message: 'Unauthorized' });
+
+      req.body.user = verified.user;
 
       next();
     } catch (err) {

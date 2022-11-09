@@ -18,6 +18,8 @@ const verifyAdminAuth = (req, res, next) => {
 
       if (!verified.role === roles.ADMIN) return res.status(401).json({ message: 'Unauthorized' });
 
+      req.body.user = verified.user;
+
       next();
     } catch (err) {
       console.error(err.message);
