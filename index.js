@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 dotenv.config();
 
-app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
+app.use(cors({ origin: ['http://localhost:3000', 'https://abc-company-client.vercel.app'], credentials: true }));
 app.use('/api/public/uploads', express.static(path.join(__dirname, '/api/public/uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,7 +36,7 @@ mongoose
   });
 
 app.use('/message', require('./routes/message.route'));
-app.use("/user", require("./routes/user.route"));
+app.use('/user', require('./routes/user.route'));
 app.use('/admin', require('./routes/admin.route'));
 app.use('/file', require('./routes/file.route'));
 
