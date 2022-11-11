@@ -153,10 +153,38 @@ const getUser = async (req, res) => {
   }
 };
 
+/**
+ * use to check if the users are logged in or not
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} res
+ */
+const checkLoggedIn = (req, res) => {
+  if (req.headers.token) {
+    try {
+      const token = req.headers.token;
+
+      if (!token) return res.json({ state: false, role: '' });
+
+      const verify = jwt.verify(token, process.env.JWT_SECRET);
+
+      if (!verify) return res.json({ state: false, role: '' });
+
+      return res.json({ state: true, role: verify.role });
+    } catch (err) {
+      console.error(err.message);
+      return res.json({ state: false, role: '' });
+    }
+  }
+
+  return res.json({ state: false, role: '' });
+};
+
 module.exports = {
   saveUser,
   getUsers,
   loginUser,
   deleteUser,
   getUser,
+  checkLoggedIn,
 };
