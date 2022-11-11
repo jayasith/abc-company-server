@@ -16,7 +16,9 @@ const verifyManagerAuth = (req, res, next) => {
 
       const verified = jwt.verify(token, process.env.JWT_SECRET);
 
-      if (!verified.role === roles.MANAGER) return res.status(401).json({ message: 'Unauthorized' });
+      console.log(verified);
+
+      if (verified.role !== roles.MANAGER) return res.status(401).json({ message: 'Unauthorized' });
 
       req.body.user = verified.user;
 
