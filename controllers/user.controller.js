@@ -70,8 +70,8 @@ const saveUser = async (req, res) => {
  */
 const getUsers = async (req, res) => {
   try {
-    const Users = await User.find({}, { password: 0 });
-    return res.status(200).json({ Users: Users });
+    const users = await User.find({}, { password: 0 });
+    return res.status(200).json({ users: users });
   } catch (err) {
     console.error(err.message);
     return res.status(500).send();
