@@ -37,7 +37,7 @@ const loginAdmin = async (req, res) => {
         });
       }
 
-      const token = jwt.sign({ user: existingAdmin._id, type: roles.ADMIN }, process.env.JWT_SECRET);
+      const token = jwt.sign({ user: existingAdmin._id, role: roles.ADMIN }, process.env.JWT_SECRET);
 
       return res.status(200).json({ token: token, role: roles.ADMIN });
     } catch (err) {

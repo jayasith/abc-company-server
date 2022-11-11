@@ -27,7 +27,7 @@ const saveUser = async (req, res) => {
       const existingUser = await User.findOne({ $or: [{ email }, { username }], role });
       if (existingUser) {
         return res.status(400).json({
-          message: 'An account with this email is already registered',
+          message: 'An account with this email or username is already registered',
         });
       }
 
@@ -48,11 +48,9 @@ const saveUser = async (req, res) => {
         password: hashedPassword,
         role,
       });
-      const savedUser = await newUser.save();
+      await newUser.save();
 
-      const token = jwt.sign({ user: savedUser._id, role }, process.env.JWT_SECRET);
-
-      return res.status(201).json({ token, role });
+      return res.status(201).json({ user: newUser });
     } catch (err) {
       console.error(err.message);
       return res.status(500).send();
