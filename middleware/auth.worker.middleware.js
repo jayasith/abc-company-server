@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const roles = require("../utils/roles.util");
+const jwt = require('jsonwebtoken');
+const roles = require('../utils/roles.util');
 
 /**
  * use to authorize as worker
@@ -13,18 +13,18 @@ const verifyWorkerAuth = (req, res, next) => {
     try {
       const token = req.headers.token;
       console.log(token);
-      if (!token) return res.status(401).json({ message: "Unauthorized" });
-      if (!verified.role === roles.WORKER)
-        return res.status(401).json({ message: "Unauthorized" });
-      if (verified.role === roles.WORKER) {
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.body.user = verified.user;
-      }
+      if (!token) return res.status(401).json({ message: 'Unauthorized' });
+
+      const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+      if (!verified.role === roles.WORKER) return res.status(401).json({ message: 'Unauthorized' });
+
+      req.body.user = verified.user;
 
       next();
     } catch (err) {
       console.error(err.message);
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: 'Unauthorized' });
     }
   }
 };
