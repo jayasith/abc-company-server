@@ -1,10 +1,11 @@
 const router = require('express').Router();
-const { saveUser, getUsers, loginUser, deleteUser, getUser } = require('../controllers/user.controller');
+const { saveUser, getUsers, loginUser, deleteUser, getUser, checkLoggedIn } = require('../controllers/user.controller');
 const { verifyAdminAuth } = require('../middleware/auth.admin.middleware');
 
 router.get('/', verifyAdminAuth, getUsers);
 router.post('/register', verifyAdminAuth, saveUser);
 router.post('/login', loginUser);
+router.get('/logged', checkLoggedIn);
 router.get('/:id', verifyAdminAuth, getUser);
 router.delete('/:id', verifyAdminAuth, deleteUser);
 
