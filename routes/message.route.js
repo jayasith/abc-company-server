@@ -18,6 +18,6 @@ router.get('/worker/get/:id', verifyWorkerAuth, getMessgeById);
 router.get('/manager/get/:id', verifyManagerAuth, getMessgeById);
 router.post('/worker', verifyWorkerAuth, saveMessage);
 router.post('/manager', verifyManagerAuth, saveMessage);
-router.delete('/:id', deleteMessage);
+router.delete("/:id", verifyAdminAuth, deleteMessage);
 
 module.exports = router;
