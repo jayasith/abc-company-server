@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 describe('GET @ /users endpoint', () => {
   it('should return an users array and return status code 200', async () => {
     try {
